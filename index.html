@@ -1,1 +1,34 @@
-export default{async fetch(){return new Response(`<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{background:#0a0a0a;color:#fff;font-family:sans-serif;text-align:center;padding:20px}h1{font-size:32px;margin:10px}.box{border:1px solid #ffaa00;border-radius:20px;padding:20px;background:#111}button{background:#ff2222;color:#fff;border:none;padding:15px 30px;border-radius:30px;font-size:20px;font-weight:bold}audio{width:100%;margin-top:15px}</style></head><body><div style="font-size:50px">🎵</div><h1>DJ REY AYALA RADIO</h1><p>DESDE PARAGUAY PARA EL MUNDO 🔵</p><div class="box"><p style="color:#ffaa00">● RADIO ONLINE</p><h2>¡La música nos une!</h2><button onclick="document.getElementById('a').play()">▶ ESCUCHAR RADIO</button><audio id="a" controls src="https://drive.google.com/uc?id=1i8lPjem2K1sAmBWJI8Foe30Sv_zb1nK8"></audio><p>Mix 8 - En vivo</p></div><p>Para escuchar 24 horas, dejá la página abierta.</p></body></html>`,{headers:{'content-type':'text/html'}})}}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MELODIRADIO 2026</title>
+<style>
+body { background: black; color: white; text-align: center; font-family: Arial; margin: 0; padding: 20px; }
+h1 { color: #ffcc00; font-size: 32px; }
+h2 { color: white; margin-top: 30px; }
+p { font-size: 20px; }
+audio { width: 90%; max-width: 400px; margin: 10px; }
+button { background: #ffcc00; color: black; border: none; padding: 15px 20px; font-size: 18px; border-radius: 10px; margin: 8px; font-weight: bold; width: 90%; max-width: 400px; }
+</style>
+</head>
+<body>
+
+<h1>🎵 MELODIRADIO 2026 🎵</h1>
+<p>¡Pura Kachaka! 🇵🇾</p>
+
+<h2>🔥 MI TEMA 1 - TOCÁ PLAY</h2>
+<audio controls preload="auto">
+<source src="https://drive.usercontent.google.com/download?id=10bn7YudcDH42QfK3hX5XB9xyyHQFQKTZ&export=download&confirm=t" type="audio/mpeg">
+Tu navegador no soporta audio.
+</audio>
+
+<h2>🎶 ENGANCHADO DE KACHAKA</h2>
+<button onclick="window.open('https://www.youtube.com/results?search_query=enganchado+kachaka+guarani', '_blank')">▶️ SONAR ENGANCHADO</button>
+
+<h2>💃 KACHAKA PIRU BAILABLE</h2>
+<button onclick="window.open('https://www.youtube.com/results?search_query=kachaka+piru+bailable', '_blank')">▶️ SONAR KACHAKA PIRU</button>
+
+</body>
+</html>
