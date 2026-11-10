@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MELODIRADIO 2026</title>
+</head>
+<body style="background:black;color:white;text-align:center;font-family:Arial;">
+<h1 style="color:#ffcc00;">MELODIRADIO 2026</h1>
+<p>Suena sin parar</p>
+<audio id="p" controls style="width:90%;"></audio><br><br>
+<div id="a">Toca un tema</div><br>
+<button onclick="s(0)">MI AMOR</button><br><br>
+<button onclick="s(1)">ESE LOCO SOY YO</button><br><br>
+<button onclick="s(2)">LLORANDO LOS DOS</button><br><br>
+<button onclick="s(3)">OLVIDATE DE TODO</button><br><br>
+<button onclick="s(4)">OSITO DORMILON</button>
+<script>
+var c=["Mi%20Amor%28MP3_160K%29.mp3","Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3","Llorando%20Los%20Dos%28MP3_160K%29.mp3","Olv%C3%ADdate%20De%20Todo%28MP3_160K%29.mp3","Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3"];
+var t=["MI AMOR","ESE LOCO SOY YO","LLORANDO LOS DOS","OLVIDATE DE TODO","OSITO DORMILON"];
+var p=document.getElementById('p');
+var n=0;
+function s(i){n=i;p.src=c[i];document.getElementById('a').innerText="Sonando: "+t[i];p.play();}
+p.onended=function(){n=n+1;if(n>=5){n=0;}s(n);};
+</script>
+</body>
+</html>
