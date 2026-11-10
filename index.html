@@ -1,37 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MELODIRADIO 2026</title><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
-</head>
-<body style="background:black;color:white;text-align:center;font-family:Arial;">
-<h1 style="color:#ffcc00;">MELODIRADIO 2026</h1>
-<p>Suena sin parar</p>
-<audio id="p" controls style="width:90%;"></audio><br><br>
-<div id="a">Toca un tema</div><br>
-<button onclick="s(0)">MI AMOR</button><br><br>
-<button onclick="s(1)">ESE LOCO SOY YO</button><br><br>
-<button onclick="s(2)">LLORANDO LOS DOS</button><br><br>
-<button onclick="s(3)">OLVIDATE DE TODO</button><br><br>
-<button onclick="s(4)">OSITO DORMILON</button><br><br>
-<button onclick="s(5)">AMOR TOTAL - BRONCO</button><br><br>
-<button onclick="s(6)">ESPINAS - BRONCO</button><br><br>
-<button onclick="s(7)">ORO - BRONCO</button><br><br>
-<button onclick="s(8)">UN FIN DE SEMANA - BRONCO</button><br><br>
-<button onclick="s(9)">ADIOS Y BUENA SUERTE - LOS REHENES</button><br><br>
-<button onclick="s(10)">QUIEN - GRUPO AZTEKA</button><br><br>
-<button onclick="s(11)">AMIGA MIA - AZTEKA</button><br><br>
-<button onclick="s(12)">LOCO POR TI - LOS BUKIS</button><br><br>
-<button onclick="s(13)">BAJO LOS OJOS DE DIOS</button><br><br>
-<button onclick="s(14)">AUNQUE SEA A ESCONDIDAS</button><br><br>
-<button onclick="s(15)">TE AMO Y TE AMO</button>
+<!-- 🔥 TODOS JUNTOS - MELODI RADIO --><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
+<h2 style="color:yellow; text-align:center;">🔥 TODOS JUNTOS</h2>
+<div style="text-align:center;">
+  <button onclick="playTodo()" style="padding:15px; width:95%; background:#ffcc00; font-size:18px; font-weight:bold; border-radius:12px;">▶️ PLAY TODO JUNTO - SIN PARAR</button>
+  <p id="ahoraSuena" style="color:white; font-size:16px;">Apretá PLAY para empezar</p>
+  <audio id="playerTodo" controls style="width:95%;"></audio>
+  <br>
+  <label style="color:white;"><input type="checkbox" id="repetirTodo" checked> 🔁 Repetir todo cuando termine</label>
+</div>
+
 <script>
-var c=["Mi%20Amor%28MP3_160K%29.mp3","Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3","Llorando%20Los%20Dos%28MP3_160K%29.mp3","Olv%C3%ADdate%20De%20Todo%28MP3_160K%29.mp3","Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3","Bronco%20-%20Amor%20Total%20%281989%29%28MP3_160K%29.mp3","Bronco%20-%20Espinas%20%281992%29%28MP3_160K%29.mp3","Bronco%20-%20Oro%20%281991%29%28MP3_160K%29.mp3","Bronco%20-%20Un%20Fin%20De%20Semana%20%281989%29%28MP3_160K%29.mp3","Los%20Rehenes%20-%20Adi%C3%B3s%20Y%20Buena%20Suerte%20%28Visual%29.mp3","Grupo%20Azteka-Quien.mp3","Azteka_%20Amiga%20Mia.mp3","Los%20Bukis%20_Loco%20por%20ti_%20_marcoantoniosol.mp3","Bajo%20Los%20Ojos%20De%20Dios%28MP3_160K%29.mp3","Aunque%20Sea%20A%20Escondidas%28MP3_160K%29.mp3","Te%20Amo%20Y%20Te%20Amo%28MP3_160K%29.mp3"];
-var t=["MI AMOR","ESE LOCO SOY YO","LLORANDO LOS DOS","OLVIDATE DE TODO","OSITO DORMILON","AMOR TOTAL - BRONCO","ESPINAS - BRONCO","ORO - BRONCO","UN FIN DE SEMANA - BRONCO","ADIOS Y BUENA SUERTE","QUIEN - GRUPO AZTEKA","AMIGA MIA - AZTEKA","LOCO POR TI - LOS BUKIS","BAJO LOS OJOS DE DIOS","AUNQUE SEA A ESCONDIDAS","TE AMO Y TE AMO"];
-var p=document.getElementById('p');
-var n=0;
-function s(i){n=i;p.src=c[i];document.getElementById('a').innerText="Sonando: "+t[i];p.play();}
-p.onended=function(){n=n+1;if(n>=16){n=0;}s(n);};
+var todo = [
+{t:"CACHACAS 80 90 - DJ TEIO", f:"CACHACAS%20REMIX%20DE%20LOS%2080%2090%20INOLVIDABLES%20X%20DJ%20TEIO%202023%28MP3_160K%29.mp3"},
+{t:"ENGANCHADOS CACHACAS MIX", f:"ENGANCHADOS%20CACHACAS%20MIX%28MP3_160K%29.mp3"},
+{t:"DJ REY AYALA MIX 8", f:"dj%20rey%20Ayala%20mix%208%20.enganchado%20-mix8.mp3"},
+{t:"MI AMOR", f:"Mi%20Amor%28MP3_160K%29.mp3"},
+{t:"ESE LOCO SOY YO", f:"Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3"},
+{t:"LLORANDO LOS DOS", f:"Llorando%20Los%20Dos%28MP3_160K%29.mp3"},
+{t:"OLVIDATE DE TODO", f:"Olvidate%20De%20Todo%28MP3_160K%29.mp3"},
+{t:"OSITO DORMILON", f:"Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3"},
+{t:"AZTEKA - AMIGA MIA", f:"Azteka_%20Amiga%20Mia.mp3"},
+{t:"GRUPO AZTEKA - QUIEN", f:"Grupo%20Azteka-Quien.mp3"},
+{t:"BRONCO - ORO", f:"Bronco%20-%20Oro%20%281991%29%28MP3_160K%29.mp3"},
+{t:"BRONCO - ESPINAS", f:"Bronco%20-%20Espinas%20%281992%29%28MP3_160K%29.mp3"},
+{t:"BRONCO - AMOR TOTAL", f:"Bronco%20-%20Amor%20Total%20%281991%29%28MP3_160K%29.mp3"},
+{t:"TE AMO Y TE AMO", f:"Te%20Amo%20Y%20Te%20Amo%28MP3_160K%29.mp3"},
+{t:"LA ROMPE CORAZONES", f:"La%20Rompe%20Corazones%28MP3_160K%29.mp3"},
+{t:"BAD BUNNY MIX EXITOS", f:"Bad%20Bunny%20Mix%20Exitos%202.mp3"},
+{t:"LOS DEL FUEGO - JURABA", f:"Los%20del%20Fuego%20-%20Juraba.mp3"},
+{t:"SUDAMERIKAL", f:"Sudamerikal%28MP3_160K%29.mp3"}
+];
+var pos = 0;
+var pTodo = document.getElementById("playerTodo");
+function playTodo(){
+  pTodo.src = todo[pos].f;
+  document.getElementById("ahoraSuena").innerHTML = "🎵 Sonando: " + todo[pos].t;
+  pTodo.play();
+}
+pTodo.onended = function(){
+  pos = pos + 1;
+  if(pos >= todo.length){
+    if(document.getElementById("repetirTodo").checked){ pos = 0; }
+    else { return; }
+  }
+  playTodo();
+};
 </script>
-</body>
-</html>
+<!-- FIN TODOS JUNTOS -->
