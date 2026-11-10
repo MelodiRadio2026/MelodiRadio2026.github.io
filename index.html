@@ -5,15 +5,43 @@
 <title>MELODIRADIO 2026</title>
 <style>
 body { background: black; color: white; text-align: center; font-family: Arial; padding: 20px; }
-h1 { color: #ffcc00; }
+h1 { color: #ffcc00; font-size: 32px; }
+button { background: #ffcc00; color: black; border: none; padding: 15px; font-size: 18px; border-radius: 10px; margin: 8px; width: 90%; max-width: 400px; font-weight: bold; }
 audio { width: 90%; max-width: 400px; }
 </style>
 </head>
 <body>
 <h1>🎵 MELODIRADIO 2026 🎵</h1>
-<h2>MI TEMA 1 - TOCA PLAY</h2>
-<audio controls>
-<source src="Mi%20Amor%28MP3_160K%29.mp3">
-</audio>
+<p>¡Pura Kachaka! 🇵🇾 - Suena sin parar 🔁</p>
+<audio id="player" controls></audio>
+<br><br>
+<div id="ahora" style="color:#ffcc00; font-weight:bold; margin:10px;">Toca un tema 👇</div>
+<button onclick="playSong(0)">▶ MI AMOR</button><br>
+<button onclick="playSong(1)">▶ ESE LOCO SOY YO</button><br>
+<button onclick="playSong(2)">▶ LLORANDO LOS DOS</button><br>
+<button onclick="playSong(3)">▶ OLVIDATE DE TODO</button><br>
+<button onclick="playSong(4)">▶ OSITO DORMILON</button><br>
+<script>
+var songs = [
+["MI AMOR", "Mi%20Amor%28MP3_160K%29.mp3"],
+["ESE LOCO SOY YO", "Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3"],
+["LLORANDO LOS DOS", "Llorando%20Los%20Dos%28MP3_160K%29.mp3"],
+["OLVIDATE DE TODO", "Olv%C3%ADdate%20De%20Todo%28MP3_160K%29.mp3"],
+["OSITO DORMILON", "Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3"]
+];
+var player = document.getElementById('player');
+var current = 0;
+function playSong(i){
+current = i;
+player.src = songs[i][1];
+document.getElementById('ahora').innerText = "🔊 Sonando: " + songs[i][0];
+player.play();
+}
+player.addEventListener('ended', function(){
+current = current + 1;
+if(current >= songs.length){ current = 0; }
+playSong(current);
+});
+</script>
 </body>
 </html>
