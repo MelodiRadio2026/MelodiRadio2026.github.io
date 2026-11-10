@@ -13,36 +13,50 @@ var todo = [
 {t:"CACHACAS 80 90 - DJ TEIO", f:"CACHACAS%20REMIX%20DE%20LOS%2080%2090%20INOLVIDABLES%20X%20DJ%20TEIO%202023%28MP3_160K%29.mp3"},
 {t:"ENGANCHADOS CACHACAS MIX", f:"ENGANCHADOS%20CACHACAS%20MIX%28MP3_160K%29.mp3"},
 {t:"DJ REY AYALA MIX 8", f:"dj%20rey%20Ayala%20mix%208%20.enganchado%20-mix8.mp3"},
-{t:"MI AMOR", f:"Mi%20Amor%28MP3_160K%29.mp3"},
-{t:"ESE LOCO SOY YO", f:"Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3"},
-{t:"LLORANDO LOS DOS", f:"Llorando%20Los%20Dos%28MP3_160K%29.mp3"},
-{t:"OLVIDATE DE TODO", f:"Olvidate%20De%20Todo%28MP3_160K%29.mp3"},
-{t:"OSITO DORMILON", f:"Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3"},
-{t:"AZTEKA - AMIGA MIA", f:"Azteka_%20Amiga%20Mia.mp3"},
-{t:"GRUPO AZTEKA - QUIEN", f:"Grupo%20Azteka-Quien.mp3"},
-{t:"BRONCO - ORO", f:"Bronco%20-%20Oro%20%281991%29%28MP3_160K%29.mp3"},
-{t:"BRONCO - ESPINAS", f:"Bronco%20-%20Espinas%20%281992%29%28MP3_160K%29.mp3"},
-{t:"BRONCO - AMOR TOTAL", f:"Bronco%20-%20Amor%20Total%20%281991%29%28MP3_160K%29.mp3"},
-{t:"TE AMO Y TE AMO", f:"Te%20Amo%20Y%20Te%20Amo%28MP3_160K%29.mp3"},
-{t:"LA ROMPE CORAZONES", f:"La%20Rompe%20Corazones%28MP3_160K%29.mp3"},
-{t:"BAD BUNNY MIX EXITOS", f:"Bad%20Bunny%20Mix%20Exitos%202.mp3"},
-{t:"LOS DEL FUEGO - JURABA", f:"Los%20del%20Fuego%20-%20Juraba.mp3"},
-{t:"SUDAMERIKAL", f:"Sudamerikal%28MP3_160K%29.mp3"}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MELODIRADIO 2026</title>
+<style>
+body { background: black; color: white; text-align: center; font-family: Arial; padding: 20px; }
+h1 { color: #ffcc00; font-size: 32px; }
+button { background: #ffcc00; color: black; border: none; padding: 15px; font-size: 18px; border-radius: 10px; margin: 8px; width: 90%; max-width: 400px; font-weight: bold; }
+audio { width: 90%; max-width: 400px; }
+</style>
+</head>
+<body>
+<h1>🎵 MELODIRADIO 2026 🎵</h1>
+<p>¡Pura Kachaka! 🇵🇾 - Suena sin parar 🔁</p>
+<audio id="player" controls></audio>
+<br><br>
+<div id="ahora" style="color:#ffcc00; font-weight:bold; margin:10px;">Toca un tema 👇</div>
+<button onclick="playSong(0)">▶ MI AMOR</button><br>
+<button onclick="playSong(1)">▶ ESE LOCO SOY YO</button><br>
+<button onclick="playSong(2)">▶ LLORANDO LOS DOS</button><br>
+<button onclick="playSong(3)">▶ OLVIDATE DE TODO</button><br>
+<button onclick="playSong(4)">▶ OSITO DORMILON</button><br>
+<script>
+var songs = [
+["MI AMOR", "Mi%20Amor%28MP3_160K%29.mp3"],
+["ESE LOCO SOY YO", "Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3"],
+["LLORANDO LOS DOS", "Llorando%20Los%20Dos%28MP3_160K%29.mp3"],
+["OLVIDATE DE TODO", "Olv%C3%ADdate%20De%20Todo%28MP3_160K%29.mp3"],
+["OSITO DORMILON", "Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3"]
 ];
-var pos = 0;
-var pTodo = document.getElementById("playerTodo");
-function playTodo(){
-  pTodo.src = todo[pos].f;
-  document.getElementById("ahoraSuena").innerHTML = "🎵 Sonando: " + todo[pos].t;
-  pTodo.play();
+var player = document.getElementById('player');
+var current = 0;
+function playSong(i){
+current = i;
+player.src = songs[i][1];
+document.getElementById('ahora').innerText = "Sonando: " + songs[i][0];
+player.play();
 }
-pTodo.onended = function(){
-  pos = pos + 1;
-  if(pos >= todo.length){
-    if(document.getElementById("repetirTodo").checked){ pos = 0; }
-    else { return; }
-  }
-  playTodo();
-};
+player.addEventListener('ended', function(){
+current = current + 1;
+if(current >= songs.length){ current = 0; }
+playSong(current);
+});
 </script>
-<!-- FIN TODOS JUNTOS -->
+</body>
+</html>
