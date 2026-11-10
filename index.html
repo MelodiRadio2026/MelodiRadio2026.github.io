@@ -34,7 +34,7 @@ var current = 0;
 function playSong(i){
 current = i;
 player.src = songs[i][1];
-document.getElementById('ahora').innerText = "🔊 Sonando: " + songs[i][0];
+document.getElementById('ahora').innerText = "Sonando: " + songs[i][0];
 player.play();
 }
 player.addEventListener('ended', function(){
