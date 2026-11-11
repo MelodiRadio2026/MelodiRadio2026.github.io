@@ -1,22 +1,37 @@
-<div style="text-align:center;">
+<div style="text-align:center;"><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
 <button onclick="empezar()" style="padding:15px;width:95%;background:#ffcc00;font-size:18px;font-weight:bold;border-radius:12px;">▶️ PLAY SIN PARAR 🔁</button>
 <p id="t" style="color:white;">Apretá PLAY</p>
 <audio id="a" controls style="width:95%;"></audio>
 </div>
 <script>
-let lista=[], i=0;
+let lista=[
+"Adictiva(MP3_160K).mp3",
+"Anoviete Nde Rehe-Nando.mp3",
+"Asegulmita mante aiko.mp3",
+"Aunque Sea A Escondidas(MP3_160K).mp3",
+"Azteka-Amiga Mia .mp3",
+"Bajo Los Ojos De Dios(MP3_160K).mp3",
+"Bronco -Amor Total (1991)(MP3_160K).mp3",
+"Bronco -Espinas(1992)(MP3_160K).mp3",
+"Bronco Oro (1991)(MP3_160K).mp3",
+"Bronco -Un Fin De Semana(MP3_160K).mp3",
+"Ese Loco Soy Yo(MP3_160K).mp3",
+"Grupo Azteca -Quien.mp3",
+"La Rompe Corazones(MP3_160K).mp3",
+"Llorando Los Dos(MP3_160K).mp3",
+"Mi Amor(MP3_160K).mp3",
+"Osito Dormilón(MP3_160K).mp3",
+"Te Amo Y Te Amo(MP3_160K).mp3",
+"Prometiste rolo y los impecables.mp3"
+];
+let i=0;
 let au=document.getElementById("a");
-async function empezar(){
-let r=await fetch("https://api.github.com/repos/MelodiRadio2026/MelodiRadio2026.github.io/contents/");
-let d=await r.json();
-lista=d.filter(x=>x.name.toLowerCase().endsWith(".mp3")).map(x=>x.name).sort();
-tocar();
-}
 function tocar(){
 document.getElementById("t").innerText="🎵 Sonando "+(i+1)+" de "+lista.length;
 au.src=encodeURI(lista[i]);
 au.play();
 }
+function empezar(){ tocar(); }
 function siguiente(){ i++; if(i>=lista.length){ i=0; } tocar(); }
 au.onended=siguiente;
 au.onerror=siguiente;
