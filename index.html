@@ -1,44 +1,68 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
+<html lang="es">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radio Online Melody PY</title>
+<title>Radio Online Melodi PY</title>
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+body{background:#000;color:#fff;font-family:Arial;text-align:center;margin:0;padding:10px}
+.logo{width:90%;max-width:350px;border-radius:20px;margin-top:10px}
+h1{color:#FFD700;margin:5px}
+h3{color:#ff2222;margin:0 0 10px}
+#player{width:95%;margin:10px 0}
+.cancion{background:#1a1a1a;border:2px solid #FFD700;color:#fff;padding:14px;margin:8px;border-radius:15px;font-size:17px;width:95%;text-align:left;cursor:pointer}
+.cancion:active{background:#FFD700;color:#000}
+.cancion span{font-size:22px;margin-right:8px}
+</style>
 </head>
-<body style="background:black;color:white;text-align:center;font-family:Arial;">
-<h1 style="color:#ffcc00;">RADIO ONLINE MELODY PY</h1>
-<p>Suena sin parar</p>
-<audio id="p" controls style="width:90%;"></audio><br><br>
-<div id="a">Toca un tema</div><br>
-<button onclick="s(0)">MI AMOR</button><br><br>
-<button onclick="s(1)">ESE LOCO SOY YO</button><br><br>
-<button onclick="s(2)">LLORANDO LOS DOS</button><br><br>
-<button onclick="s(3)">OLVIDATE DE TODO</button><br><br>
-<button onclick="s(4)">OSITO DORMILON</button><br><br>
-<button onclick="s(5)">AMOR TOTAL - BRONCO</button><br><br>
-<button onclick="s(6)">ESPINAS - BRONCO</button><br><br>
-<button onclick="s(7)">ORO - BRONCO</button><br><br>
-<button onclick="s(8)">UN FIN DE SEMANA - BRONCO</button><br><br>
-<button onclick="s(9)">ADIOS Y BUENA SUERTE</button><br><br>
-<button onclick="s(10)">QUIEN - AZTEKA</button><br><br>
-<button onclick="s(11)">AMIGA MIA - AZTEKA</button><br><br>
-<button onclick="s(12)">LOCO POR TI - LOS BUKIS</button><br><br>
-<button onclick="s(13)">BAJO LOS OJOS DE DIOS</button><br><br>
-<button onclick="s(14)">AUNQUE SEA A ESCONDIDAS</button><br><br>
-<button onclick="s(15)">TE AMO Y TE AMO</button><br><br>
-<button onclick="s(16)">ADICTIVA</button><br><br>
-<button onclick="s(17)">ANOVIETE NDE REHE</button><br><br>
-<button onclick="s(18)">BAD BUNNY MIX EXITOS</button><br><br>
-<button onclick="s(19)">LA ROMPE CORAZONES</button><br><br>
-<button onclick="s(20)">JURABA - LOS DEL FUEGO</button><br><br>
-<button onclick="s(21)">PYKAZU HOVY - YEYITA</button><br><br>
-<button onclick="s(22)">SUDAMERIKAL</button>
+<body>
+
+<img src="icon.png" class="logo">
+<h1>RADIO ONLINE MELODI PY</h1>
+<h3>★ 24 HS - Con buenas Música ★</h3>
+
+<audio id="player" controls controlsList="nodownload"></audio>
+<p id="sonando" style="color:#FFD700;font-weight:bold">Apretá una canción para que suene 👇</p>
+
+<div id="lista"></div>
+
 <script>
-var c=["Mi%20Amor%28MP3_160K%29.mp3","Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3","Llorando%20Los%20Dos%28MP3_160K%29.mp3","Olv%C3%ADdate%20De%20Todo%28MP3_160K%29.mp3","Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3","Bronco%20-%20Amor%20Total%20%281989%29%28MP3_160K%29.mp3","Bronco%20-%20Espinas%20%281992%29%28MP3_160K%29.mp3","Bronco%20-%20Oro%20%281991%29%28MP3_160K%29.mp3","Bronco%20-%20Un%20Fin%20De%20Semana%20%281989%29%28MP3_160K%29.mp3","Los%20Rehenes%20-%20Adi%C3%B3s%20Y%20Buena%20Suerte%20%28Visual%29.mp3","Grupo%20Azteka-Quien.mp3","Azteka_%20Amiga%20Mia.mp3","Los%20Bukis%20_Loco%20por%20ti_%20_marcoantoniosol.mp3","Bajo%20Los%20Ojos%20De%20Dios%28MP3_160K%29.mp3","Aunque%20Sea%20A%20Escondidas%28MP3_160K%29.mp3","Te%20Amo%20Y%20Te%20Amo%28MP3_160K%29.mp3","Adictiva%28MP3_160K%29.mp3","Anoviete%20Nde%20Rehe%20_%20N.mp3","Bad%20Bunny%20Mix%20Exitos%202.mp3","La%20Rompe%20Corazones%28MP3_160K%29.mp3","Los%20del%20Fuego%20-%20Juraba.mp3","Pykazu%20Hovy%20_%20Yeyita%20P.mp3","Sudamerikal%28MP3_160K%29.mp3"];
-var t=["MI AMOR","ESE LOCO SOY YO","LLORANDO LOS DOS","OLVIDATE DE TODO","OSITO DORMILON","AMOR TOTAL - BRONCO","ESPINAS - BRONCO","ORO - BRONCO","UN FIN DE SEMANA - BRONCO","ADIOS Y BUENA SUERTE","QUIEN - AZTEKA","AMIGA MIA - AZTEKA","LOCO POR TI - LOS BUKIS","BAJO LOS OJOS DE DIOS","AUNQUE SEA A ESCONDIDAS","TE AMO Y TE AMO","ADICTIVA","ANOVIETE NDE REHE","BAD BUNNY MIX EXITOS","LA ROMPE CORAZONES","JURABA - LOS DEL FUEGO","PYKAZU HOVY - YEYITA","SUDAMERIKAL"];
-var p=document.getElementById('p');
-var n=0;
-function s(i){n=i;p.src=c[i];document.getElementById('a').innerText="Sonando: "+t[i];p.play();}
-p.onended=function(){n=n+1;if(n>=23){n=0;}s(n);};
+const canciones = [
+"Adictiva(MP3_160K).mp3",
+"Anoviete Nde Rehe _ Nemba_erante Ko Che.mp3",
+"Aseguimita mante aiko - Derlis Gerardo y la misma.mp3",
+"Aunque Sea A Escondidas(MP3_160K).mp3",
+"Azteka_ Amiga Mia.mp3",
+"Bajo Los Ojos De Dios(MP3_160K).mp3",
+"Bronco - Amor Total (1989)(MP3_160K).mp3",
+"Bronco - Espinas (1992)(MP3_160K).mp3",
+"Bronco - Oro (1991)(MP3_160K).mp3",
+"Bronco - Un Fin De Semana (1989)(MP3_160K).mp3",
+"Che yvoty suavemi - Derlis Gerardo y la misma.mp3",
+"Ese Loco Soy Yo(MP3_160K).mp3",
+"Grupo Azteka-Quien.mp3",
+"La Rompe Corazones(MP3_160K).mp3"
+];
+
+const lista = document.getElementById("lista");
+const player = document.getElementById("player");
+const sonando = document.getElementById("sonando");
+
+canciones.forEach(nombre => {
+  let bonito = nombre.replace(".mp3","").replace("(MP3_160K)","").replace("_"," ");
+  let btn = document.createElement("button");
+  btn.className = "cancion";
+  btn.innerHTML = "<span>▶️</span>" + bonito;
+  btn.onclick = () => {
+    player.src = encodeURI(nombre);
+    player.play();
+    sonando.innerText = "🔊 Sonando ahora: " + bonito;
+  };
+  lista.appendChild(btn);
+});
 </script>
+
 </body>
 </html>
