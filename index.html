@@ -12,9 +12,12 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;margin:0;pad
 h1{color:#FFD700;margin:5px}
 h3{color:#ff2222;margin:0 0 10px}
 #player{width:95%;margin:10px 0}
+.boton-grande{background:#FFD700;color:#000;border:none;padding:16px;margin:8px;border-radius:20px;font-size:20px;font-weight:bold;width:95%;cursor:pointer}
+.boton-grande:active{background:#fff}
 .cancion{background:#1a1a1a;border:2px solid #FFD700;color:#fff;padding:14px;margin:8px;border-radius:15px;font-size:17px;width:95%;text-align:left;cursor:pointer}
 .cancion:active{background:#FFD700;color:#000}
 .cancion span{font-size:22px;margin-right:8px}
+.activa{background:#FFD700 !important;color:#000 !important}
 </style>
 </head>
 <body>
@@ -24,7 +27,10 @@ h3{color:#ff2222;margin:0 0 10px}
 <h3>★ 24 HS - Con buenas Música ★</h3>
 
 <audio id="player" controls controlsList="nodownload"></audio>
-<p id="sonando" style="color:#FFD700;font-weight:bold">Apretá una canción para que suene 👇</p>
+<p id="sonando" style="color:#FFD700;font-weight:bold">Apretá abajo para que suene sin parar 👇</p>
+
+<button class="boton-grande" onclick="sonarTodo()">▶️ SONAR TODO SIN PARAR</button>
+<button class="boton-grande" style="background:#ff2222;color:#fff" onclick="sonarAleatorio()">🔀 SONAR EN ALEATORIO</button>
 
 <div id="lista"></div>
 
@@ -43,23 +49,66 @@ const canciones = [
 "Che yvoty suavemi - Derlis Gerardo y la misma.mp3",
 "Ese Loco Soy Yo(MP3_160K).mp3",
 "Grupo Azteka-Quien.mp3",
-"La Rompe Corazones(MP3_160K).mp3"
+"La Rompe Corazones(MP3_160K).mp3",
+"Llorando Los Dos(MP3_160K).mp3",
+"Mi Amor(MP3_160K).mp3",
+"Mi complice - rolo y los impecables.mp3",
+"Olvídate De Todo(MP3_160K).mp3",
+"Osito Dormilón(MP3_160K).mp3",
+"Quien sabe el tiempo la ...mp3",
+"ROLO Y LOS IMPECABLES.mp3",
+"Sudamerika(MP3_160K).mp3",
+"Te Amo Y Te Amo(MP3_160K).mp3"
 ];
 
 const lista = document.getElementById("lista");
 const player = document.getElementById("player");
 const sonando = document.getElementById("sonando");
+let actual = 0;
+let aleatorio = false;
 
-canciones.forEach(nombre => {
-  let bonito = nombre.replace(".mp3","").replace("(MP3_160K)","").replace("_"," ");
+function bonito(nombre){
+  return nombre.replace(".mp3","").replace("(MP3_160K)","").replace("_"," ");
+}
+
+function tocar(i){
+  actual = i;
+  player.src = encodeURI(canciones[i]);
+  player.play();
+  sonando.innerText = "🔊 Sonando ahora: " + bonito(canciones[i]);
+  document.querySelectorAll(".cancion").forEach((b,idx)=>{
+    if(idx===i) b.classList.add("activa"); else b.classList.remove("activa");
+  });
+}
+
+function sonarTodo(){
+  aleatorio = false;
+  tocar(0);
+}
+
+function sonarAleatorio(){
+  aleatorio = true;
+  let r = Math.floor(Math.random()*canciones.length);
+  tocar(r);
+}
+
+// CUANDO TERMINA UNA, SUENA LA OTRA SOLA SIN PARAR
+player.onended = () => {
+  if(aleatorio){
+    let r = Math.floor(Math.random()*canciones.length);
+    tocar(r);
+  } else {
+    let siguiente = actual + 1;
+    if(siguiente >= canciones.length) siguiente = 0; // vuelve al inicio
+    tocar(siguiente);
+  }
+};
+
+canciones.forEach((nombre,i) => {
   let btn = document.createElement("button");
   btn.className = "cancion";
-  btn.innerHTML = "<span>▶️</span>" + bonito;
-  btn.onclick = () => {
-    player.src = encodeURI(nombre);
-    player.play();
-    sonando.innerText = "🔊 Sonando ahora: " + bonito;
-  };
+  btn.innerHTML = "<span>▶️</span>" + bonito(nombre);
+  btn.onclick = () => { aleatorio = false; tocar(i); };
   lista.appendChild(btn);
 });
 </script>
