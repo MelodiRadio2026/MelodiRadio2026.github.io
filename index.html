@@ -1,14 +1,13 @@
-<!DOCTYPE html><img src="file_00000000c268820e905223dfda1d8e2a.png">
+<!DOCTYPE html>
 <html lang="es">
-<head>
+<head><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Radio Online Melodi PY</title>
 <link rel="icon" href="icon.png">
-<link rel="apple-touch-icon" href="icon.png">
 <style>
 body{background:#000;color:#fff;font-family:Arial;text-align:center;margin:0;padding:10px}
-.logo{width:90%;max-width:350px;border-radius:20px;margin-top:10px}
+.logo{width:95%;max-width:350px;border-radius:20px;margin-top:10px}
 h1{color:#FFD700;margin:5px}
 h3{color:#ff2222;margin:0 0 10px}
 #player{width:95%;margin:10px 0}
@@ -23,11 +22,10 @@ h3{color:#ff2222;margin:0 0 10px}
 <h1>RADIO ONLINE MELODI PY</h1>
 <h3>★ 24 HS - Con buenas Música ★</h3>
 
-<audio id="player" controls controlsList="nodownload"></audio>
+<audio id="player" controls></audio>
 <p id="sonando" style="color:#FFD700;font-weight:bold">Apretá abajo para que suene sin parar 👇</p>
 
-<button class="boton-grande" onclick="sonarTodo()">▶️ SONAR TODO SIN PARAR - REPITE SOLO</button>
-<button class="boton-grande" style="background:#ff2222;color:#fff" onclick="sonarAleatorio()">🔀 SONAR EN ALEATORIO</button>
+<button class="boton-grande" onclick="sonarTodo()">▶️ SONAR TODO SIN PARAR</button>
 
 <div id="lista"></div>
 
@@ -59,41 +57,50 @@ const canciones = [
 "Ipohyi ne pore \u00b4y - Julio Cesar y los magicos de amor.mp3",
 "Ko \u00b4anga la ndavy \u00b4ai - Julio Cesar y los magicos de amor(MP3_mp3K).mp3",
 "Ndaiporichene nde mbojojaha - Julio Cesar y los magicos de amor(MP3_mp3.mp3",
-"Ndarekoveima consuelo - Julio Cesar y los magicos de amor(MP3_mp3K).mp3"
+"Ndarekoveima consuelo - Julio Cesar y los magicos de amor(MP3_mp3K).mp3",
+"C\u00f3mo Te Olvido_ Binomio De Oro De Am\u00e9rica_ Video Letra - Sentir Vallenato.mp3",
+"Es Tan Dif\u00edcil_ Binomio De Oro De Am\u00e9rica_ Video Letra - Sentir Vallenato.mp3",
+"Impredecible_ Binomio De Oro De Am\u00e9rica_ Video Letra - Sentir Vallenato.mp3",
+"Lalo y Los Descalzos _ La Lamparita _ Jhonny Canales _(MP3_160K).mp3",
+"Lalo y Los Descalzos _ La Traicion En Vivo(MP3_160K).mp3",
+"Lalo y Los Descalzos _ Muevanse Todos(MP3_160K).mp3",
+"Lalo y Los Descalzos _ Muro De Piedra(MP3_160K).mp3",
+"Lalo y Los Descalzos _ No Hay Problema(MP3_160K).mp3"
 ];
 
 const lista = document.getElementById("lista");
 const player = document.getElementById("player");
 const sonando = document.getElementById("sonando");
 let actual = 0;
-let aleatorio = false;
 
 function bonito(n){ return n.replace(".mp3","").replace("(MP3_160K)","").replace("(MP3_mp3K)","").replace("(MP3_mp3",""); }
 
 function tocar(i){
   actual = i;
   player.src = encodeURI(canciones[i]);
-  player.play().catch(()=>{});
+  player.play();
   sonando.innerText = "🔊 Sonando ahora: " + bonito(canciones[i]);
-  document.querySelectorAll(".cancion").forEach((b,idx)=>{ if(idx===i) b.classList.add("activa"); else b.classList.remove("activa"); });
+  document.querySelectorAll(".cancion").forEach((b,idx)=>{
+    if(idx===i) b.classList.add("activa"); else b.classList.remove("activa");
+  });
 }
 
 function siguiente(){
-  if(aleatorio){ tocar(Math.floor(Math.random()*canciones.length)); }
-  else { let s = actual + 1; if(s >= canciones.length) s = 0; tocar(s); }
+  let s = actual + 1;
+  if(s >= canciones.length) s = 0;
+  tocar(s);
 }
 
-function sonarTodo(){ aleatorio = false; tocar(0); }
-function sonarAleatorio(){ aleatorio = true; tocar(Math.floor(Math.random()*canciones.length)); }
+function sonarTodo(){ tocar(0); }
 
 player.onended = siguiente;
-player.onerror = () => { siguiente(); };
+player.onerror = siguiente;
 
 canciones.forEach((nombre,i) => {
   let btn = document.createElement("button");
   btn.className = "cancion";
   btn.innerHTML = "▶️ " + bonito(nombre);
-  btn.onclick = () => { aleatorio = false; tocar(i); };
+  btn.onclick = () => tocar(i);
   lista.appendChild(btn);
 });
 </script>
