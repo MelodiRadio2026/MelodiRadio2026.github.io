@@ -1,47 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MELODIRADIO 2026</title><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
-<style>
-body { background: black; color: white; text-align: center; font-family: Arial; padding: 20px; }
-h1 { color: #ffcc00; font-size: 32px; }
-button { background: #ffcc00; color: black; border: none; padding: 15px; font-size: 18px; border-radius: 10px; margin: 8px; width: 90%; max-width: 400px; font-weight: bold; }
-audio { width: 90%; max-width: 400px; }
-</style>
-</head>
-<body>
-<h1>🎵 MELODIRADIO 2026 🎵</h1>
-<p>¡Pura Kachaka! 🇵🇾 - Suena sin parar 🔁</p>
-<audio id="player" controls></audio>
-<br><br>
-<div id="ahora" style="color:#ffcc00; font-weight:bold; margin:10px;">Toca un tema 👇</div>
-<button onclick="playSong(0)">▶ MI AMOR</button><br>
-<button onclick="playSong(1)">▶ ESE LOCO SOY YO</button><br>
-<button onclick="playSong(2)">▶ LLORANDO LOS DOS</button><br>
-<button onclick="playSong(3)">▶ OLVIDATE DE TODO</button><br>
-<button onclick="playSong(4)">▶ OSITO DORMILON</button><br>
+<div style="text-align:center;"><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
+<button onclick="empezar()" style="padding:15px;width:95%;background:#ffcc00;font-size:18px;font-weight:bold;border-radius:12px;">▶️ PLAY TODAS SIN PARAR 🔁</button>
+<p id="t" style="color:white;">Apretá PLAY</p>
+<audio id="a" controls style="width:95%;"></audio>
+<div id="lista"></div>
+</div>
 <script>
-var songs = [
-["MI AMOR", "Mi%20Amor%28MP3_160K%29.mp3"],
-["ESE LOCO SOY YO", "Ese%20Loco%20Soy%20Yo%28MP3_160K%29.mp3"],
-["LLORANDO LOS DOS", "Llorando%20Los%20Dos%28MP3_160K%29.mp3"],
-["OLVIDATE DE TODO", "Olv%C3%ADdate%20De%20Todo%28MP3_160K%29.mp3"],
-["OSITO DORMILON", "Osito%20Dormil%C3%B3n%28MP3_160K%29.mp3"]
+let lista=[
+"Adictiva(MP3_160K).mp3",
+"Anoviete Nde Rehe _ Nando.mp3",
+"Asegulmita mante alko.mp3",
+"Aunque Sea A Escondidas(MP3_160K).mp3",
+"Azteka_ Amiga Mia.mp3",
+"Bajo Los Ojos De Dios(MP3_160K).mp3",
+"Bronco - Amor Total (1991)(MP3_160K).mp3",
+"Bronco - Espinas (1992)(MP3_160K).mp3",
+"Bronco - Oro (1991)(MP3_160K).mp3",
+"Bronco - Un Fin De Semana(MP3_160K).mp3",
+"Che yvoty suavemi - Derlis Ger.mp3",
+"Ese Loco Soy Yo(MP3_160K).mp3",
+"Grupo Azteka-Quien.mp3",
+"La Rompe Corazones(MP3_160K).mp3",
+"Llorando Los Dos(MP3_160K).mp3",
+"Los del Fuego - Juraba.mp3",
+"Mi Amor(MP3_160K).mp3",
+"Mi complice - rolo y los impe.mp3",
+"Olvídate De Todo(MP3_160K).mp3",
+"Osito Dormilón(MP3_160K).mp3",
+"Pykazu Hovy _ Yeyita P.mp3",
+"Quien sabe el tiempo la.mp3",
+"ROLO Y LOS IMPECABLES.mp3",
+"Sudamerikal(MP3_160K).mp3",
+"Te Amo Y Te Amo(MP3_160K).mp3",
+"ka_avo tory - Derlis Ger.mp3"
 ];
-var player = document.getElementById('player');
-var current = 0;
-function playSong(i){
-current = i;
-player.src = songs[i][1];
-document.getElementById('ahora').innerText = "Sonando: " + songs[i][0];
-player.play();
+let i=0;
+let au=document.getElementById("a");
+let div=document.getElementById("lista");
+div.innerHTML=lista.map((n,idx)=>`<button onclick="i=${idx};tocar()" style="width:95%;margin:2px;padding:8px;">▶️ ${n}</button><br>`).join("");
+function tocar(){
+document.getElementById("t").innerText="🎵 Sonando "+(i+1)+" de "+lista.length+": "+lista[i];
+au.src=encodeURI(lista[i]);
+au.play();
 }
-player.addEventListener('ended', function(){
-current = current + 1;
-if(current >= songs.length){ current = 0; }
-playSong(current);
-});
+function empezar(){ tocar(); }
+function siguiente(){ i++; if(i>=lista.length){ i=0; } tocar(); }
+au.onended=siguiente;
+au.onerror=siguiente;
 </script>
-</body>
-</html>
