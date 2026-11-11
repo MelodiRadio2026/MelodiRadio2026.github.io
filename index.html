@@ -1,48 +1,22 @@
-<div style="text-align:center;"><img src="file_00000000c268820e905223dfda1d8e2a.png" style="width:95%;max-width:400px;border-radius:20px">
-<button onclick="empezar()" style="padding:15px;width:95%;background:#ffcc00;font-size:18px;font-weight:bold;border-radius:12px;">▶️ PLAY TODAS SIN PARAR 🔁</button>
+<div style="text-align:center;">
+<button onclick="empezar()" style="padding:15px;width:95%;background:#ffcc00;font-size:18px;font-weight:bold;border-radius:12px;">▶️ PLAY SIN PARAR 🔁</button>
 <p id="t" style="color:white;">Apretá PLAY</p>
 <audio id="a" controls style="width:95%;"></audio>
-<div id="lista"></div>
 </div>
 <script>
-let lista=[
-"Adictiva(MP3_160K).mp3",
-"Anoviete Nde Rehe _ Nando.mp3",
-"Asegulmita mante alko.mp3",
-"Aunque Sea A Escondidas(MP3_160K).mp3",
-"Azteka_ Amiga Mia.mp3",
-"Bajo Los Ojos De Dios(MP3_160K).mp3",
-"Bronco - Amor Total (1991)(MP3_160K).mp3",
-"Bronco - Espinas (1992)(MP3_160K).mp3",
-"Bronco - Oro (1991)(MP3_160K).mp3",
-"Bronco - Un Fin De Semana(MP3_160K).mp3",
-"Che yvoty suavemi - Derlis Ger.mp3",
-"Ese Loco Soy Yo(MP3_160K).mp3",
-"Grupo Azteka-Quien.mp3",
-"La Rompe Corazones(MP3_160K).mp3",
-"Llorando Los Dos(MP3_160K).mp3",
-"Los del Fuego - Juraba.mp3",
-"Mi Amor(MP3_160K).mp3",
-"Mi complice - rolo y los impe.mp3",
-"Olvídate De Todo(MP3_160K).mp3",
-"Osito Dormilón(MP3_160K).mp3",
-"Pykazu Hovy _ Yeyita P.mp3",
-"Quien sabe el tiempo la.mp3",
-"ROLO Y LOS IMPECABLES.mp3",
-"Sudamerikal(MP3_160K).mp3",
-"Te Amo Y Te Amo(MP3_160K).mp3",
-"ka_avo tory - Derlis Ger.mp3"
-];
-let i=0;
+let lista=[], i=0;
 let au=document.getElementById("a");
-let div=document.getElementById("lista");
-div.innerHTML=lista.map((n,idx)=>`<button onclick="i=${idx};tocar()" style="width:95%;margin:2px;padding:8px;">▶️ ${n}</button><br>`).join("");
+async function empezar(){
+let r=await fetch("https://api.github.com/repos/MelodiRadio2026/MelodiRadio2026.github.io/contents/");
+let d=await r.json();
+lista=d.filter(x=>x.name.toLowerCase().endsWith(".mp3")).map(x=>x.name).sort();
+tocar();
+}
 function tocar(){
-document.getElementById("t").innerText="🎵 Sonando "+(i+1)+" de "+lista.length+": "+lista[i];
+document.getElementById("t").innerText="🎵 Sonando "+(i+1)+" de "+lista.length;
 au.src=encodeURI(lista[i]);
 au.play();
 }
-function empezar(){ tocar(); }
 function siguiente(){ i++; if(i>=lista.length){ i=0; } tocar(); }
 au.onended=siguiente;
 au.onerror=siguiente;
