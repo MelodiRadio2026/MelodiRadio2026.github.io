@@ -1,1 +1,51 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicidad - MELODIRADIO2026</title>
+<style>
+body{margin:0;font-family:Arial;background:#111;color:white;text-align:center;padding:20px}
+h1{color:#ffcc00}
+.mundo{background:#ffcc00;color:#111;padding:12px;border-radius:10px;font-weight:bold;max-width:500px;margin:10px auto}
+.box{background:#222;padding:20px;border-radius:15px;max-width:500px;margin:15px auto;text-align:left}
+.box h3{color:#ffcc00;margin:0}
+.precio{font-size:28px;color:#25D366;font-weight:bold}
+button{background:#25D366;color:white;border:none;padding:15px 25px;border-radius:10px;font-size:18px;font-weight:bold;width:100%;margin-top:10px}
+a{color:#ffcc00;text-decoration:none}
+.center{text-align:center}
+</style>
+</head>
+<body>
+<h1>🎵 MELODIRADIO2026 🎵</h1>
+<div class="mundo">📡 SE ESCUCHA EN TODO EL TERRITORIO PARAGUAYO Y EN TODO EL MUNDO 🌍</div>
+<h2>📢 ANUNCIÁ EN LA RADIO</h2>
+<p>Tu negocio escuchado en todo Areguá, Paraguay y el Mundo</p>
+<div class="box">
+<h3>🔊 Mención en vivo</h3>
+<p>Te nombramos en vivo entre canciones</p>
+<p class="precio">Gs. 50.000 / semana</p>
+<button onclick="pedir('Mención en vivo')">QUIERO ESTE</button>
+</div>
+<div class="box">
+<h3>🎙️ Spot Publicitario</h3>
+<p>Tu aviso grabado pasando todo el día</p>
+<p class="precio">Gs. 100.000 / semana</p>
+<button onclick="pedir('Spot Publicitario')">QUIERO ESTE</button>
+</div>
+<div class="box">
+<h3>⭐ Patrocinador Oficial</h3>
+<p>Tu logo en la radio + menciones + spot</p>
+<p class="precio">Gs. 200.000 / mes</p>
+<button onclick="pedir('Patrocinador Oficial')">QUIERO ESTE</button>
+</div>
+<p class="center"><a href="index.html">⬅️ Volver a la Radio</a> | <a href="pedidos.html">🎵 Pedir un tema</a></p>
+<script>
+function pedir(plan){
+let texto="Hola MELODIRADIO! Me interesa la publicidad: "+plan+" ¿Me das más info?";
+window.open("https://wa.me/595991247112?text="+encodeURIComponent(texto));
+}
+</script>
+</body>
+</html>
