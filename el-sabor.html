@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EL SABOR - Caacupé</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#fff8f0;padding-bottom:30px}
+header{background:#d32f2f;color:white;text-align:center;padding:20px}
+header h1{margin:0;font-size:32px}
+header p{margin:5px 0 0 0}
+.card{background:white;margin:12px;padding:15px;border-radius:12px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
+.item:last-child{border-bottom:none}
+.item b{font-size:17px}
+.item span{color:#666;font-size:14px}
+.btns button{width:32px;height:32px;font-size:20px;border:none;border-radius:50%;background:#eee;cursor:pointer}
+.btns b{margin:0 10px;font-size:18px}
+.total{font-size:22px;text-align:center;font-weight:bold;margin:10px 0}
+button.pedir{background:#25D366;color:white;border:none;padding:16px;border-radius:10px;font-size:19px;width:100%;font-weight:bold;cursor:pointer}
+input{width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:16px;margin-top:10px;box-sizing:border-box}
+.mesa-badge{background:#ffeb3b;color:#000;padding:5px 15px;border-radius:20px;font-weight:bold;display:inline-block;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+<h1>🍔 EL SABOR</h1>
+<p>Caacupé - Comida Rica</p>
+<div class="mesa-badge">Estás en Mesa <span id="mesa">1</span></div>
+</header>
 
+<div class="card">
+<h2>📋 Menú</h2>
+<div id="menu"></div>
+</div>
+
+<div class="card">
+<h2>🧾 Tu Pedido</h2>
+<div id="resumen">Todavía no elegiste nada</div>
+<div class="total" id="total">Total: 0 Gs</div>
+<input id="nombre" placeholder="Tu nombre (opcional)">
+<button class="pedir" onclick="pedir()">🟢 Pedir por WhatsApp</button>
+<p style="text-align:center;color:#777;font-size:13px">Tu pedido llega directo al WhatsApp del restaurante</p>
+</div>
+
+<script>
+let m = new URLSearchParams(location.search).get('mesa') || '1';
+document.getElementById('mesa').textContent = m;
+
+let productos = [
+  {nombre:"🍔 Hamburguesa", precio:15000},
+  {nombre:"🍕 Pizza", precio:25000},
+  {nombre:"🌭 Lomito", precio:20000},
+  {nombre:"🍟 Papas Fritas", precio:10000},
+  {nombre:"🥤 Gaseosa", precio:5000},
+  {nombre:"🍺 Cerveza", precio:10000},
+  {nombre:"🧋 Jugo Natural", precio:8000}
+];
+
+let cantidades = {};
+productos.forEach((p,i)=> cantidades[i]=0);
+
+function dibujar(){
+  let html = "";
+  productos.forEach((p,i)=>{
+    html += `<div class="item"><div><b>${p.nombre}</b><br><span>${p.precio.toLocaleString('es-PY')} Gs</span></div><div class="btns"><button onclick="cambiar(${i},-1)">-</button><b>${cantidades[i]}</b><button onclick="cambiar(${i},1)">+</button></div></div>`;
+  });
+  document.getElementById('menu').innerHTML = html;
+  actualizarResumen();
+}
+
+function cambiar(i,d){
+  cantidades[i] = Math.max(0, cantidades[i]+d);
+  dibujar();
+}
+
+function actualizarResumen(){
+  let lineas = [];
+  let total = 0;
+  productos.forEach((p,i)=>{
+    if(cantidades[i]>0){
+      lineas.push(cantidades[i] + " x " + p.nombre + " = " + (cantidades[i]*p.precio).toLocaleString('es-PY') + " Gs");
+      total += cantidades[i]*p.precio;
+    }
+  });
+  document.getElementById('resumen').innerHTML = lineas.length ? lineas.join("<br>") : "Todavía no elegiste nada";
+  document.getElementById('total').textContent = "Total: " + total.toLocaleString('es-PY') + " Gs";
+}
+
+function pedir(){
+  let lineas = [];
+  let total = 0;
+  productos.forEach((p,i)=>{
+    if(cantidades[i]>0){
+      lineas.push(cantidades[i] + " x " + p.nombre);
+      total += cantidades[i]*p.precio;
+    }
+  });
+  if(lineas.length==0){ alert("Elegí algo primero! Tocá el +"); return; }
+  let nombre = document.getElementById('nombre').value || "Cliente";
+  let mensaje = "Hola EL SABOR! Soy " + nombre + ", de la Mesa " + m + ".\n\nQuiero pedir:\n" + lineas.join("\n") + "\n\nTotal: " + total.toLocaleString('es-PY') + " Gs";
+  let numero = "595991247112";
+  window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(mensaje));
+}
+
+dibujar();
+</script>
+</body>
+</html>
