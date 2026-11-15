@@ -17,9 +17,20 @@ header p{margin:5px 0 0 0}
 .btns button{width:32px;height:32px;font-size:20px;border:none;border-radius:50%;background:#eee;cursor:pointer}
 .btns b{margin:0 10px;font-size:18px}
 .total{font-size:22px;text-align:center;font-weight:bold;margin:10px 0}
-button.pedir{background:#25D366;color:white;border:none;padding:16px;border-radius:10px;font-size:19px;width:100%;font-weight:bold;cursor:pointer}
+button.pedir{background:#25D366;color:white;border:none;padding:16px;border-radius:10px;font-size:19px;width:100%;font-weight:bold;cursor:pointer;margin-top:8px}
+button.mozo{background:#FF9800;color:white;border:none;padding:14px;border-radius:10px;font-size:17px;width:100%;font-weight:bold;cursor:pointer;margin-top:8px}
+button.cuenta{background:#555;color:white;border:none;padding:14px;border-radius:10px;font-size:17px;width:100%;font-weight:bold;cursor:pointer;margin-top:8px}
+button.responder{background:#1976D2;color:white;border:none;padding:12px;border-radius:10px;font-size:16px;width:48%;font-weight:bold;cursor:pointer}
+button.copiar{background:#7B1FA2;color:white;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
+button.comprobante{background:#009688;color:white;border:none;padding:14px;border-radius:10px;font-size:16px;width:100%;font-weight:bold;cursor:pointer;margin-top:8px}
 input{width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:16px;margin-top:10px;box-sizing:border-box}
 .mesa-badge{background:#ffeb3b;color:#000;padding:5px 15px;border-radius:20px;font-weight:bold;display:inline-block;margin-top:10px}
+.respuesta-box{background:#e3f2fd;padding:12px;border-radius:10px;margin-top:12px;text-align:center}
+.pago-box{display:flex;gap:10px;margin-top:10px}
+.pago-opt{flex:1;text-align:center;padding:14px;border:2px solid #ddd;border-radius:12px;cursor:pointer;font-weight:bold;font-size:16px;background:#f9f9f9}
+.pago-opt.activo{border-color:#25D366;background:#e8f5e9}
+.banco-box{background:#FFF3E0;border:2px dashed #FF9800;padding:14px;border-radius:12px;margin-top:12px;display:none}
+.banco-box b{font-size:17px}
 </style>
 </head>
 <body>
@@ -39,13 +50,45 @@ input{width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:
 <div id="resumen">Todavía no elegiste nada</div>
 <div class="total" id="total">Total: 0 Gs</div>
 <input id="nombre" placeholder="Tu nombre (opcional)">
+
+<h3 style="margin-bottom:0">💳 ¿Cómo vas a pagar?</h3>
+<div class="pago-box">
+<div class="pago-opt activo" id="optEfectivo" onclick="elegirPago('Efectivo')">💵 EFECTIVO</div>
+<div class="pago-opt" id="optTransfer" onclick="elegirPago('Transferencia')">🏦 TRANSFERENCIA</div>
+</div>
+
+<div class="banco-box" id="bancoBox">
+<b>🏦 Banco Continental</b><br>
+Titular: <b>Reinerio Ayala</b><br>
+Alias: <b id="aliasTexto">0991247112</b><br><br>
+<button class="copiar" onclick="copiarAlias()">📋 Copiar Alias</button>
+<p style="font-size:13px;color:#666;margin:8px 0 0 0">1. Copiá el alias<br>2. Hacé la transferencia en tu banco<br>3. Mandanos el comprobante con el botón de abajo</p>
+</div>
+
 <button class="pedir" onclick="pedir()">🟢 Pedir por WhatsApp</button>
+<button class="comprobante" onclick="enviarComprobante()">🧾 Enviar Comprobante de Pago</button>
+<button class="mozo" onclick="llamarMozo()">🛎️ Llamar al Mozo</button>
+<button class="cuenta" onclick="pedirCuenta()">🧾 Pedir Cuenta</button>
 <p style="text-align:center;color:#777;font-size:13px">Tu pedido llega directo al WhatsApp del restaurante</p>
+</div>
+
+<div class="card">
+<h2>👨‍🍳 Para el Dueño - Responder al Cliente</h2>
+<p style="color:#666;font-size:14px;text-align:center">Cuando te llega un pedido, tocá acá para responderle</p>
+<div style="display:flex;gap:8px;justify-content:space-between">
+<button class="responder" onclick="responder('confirmado')">✅ Pedido Recibido</button>
+<button class="responder" style="background:#2E7D32" onclick="responder('listo')">🍔 ¡Pedido Listo!</button>
+</div>
+<button class="comprobante" style="background:#FF6D00" onclick="responder('comprobante')">🧾 Pedir Comprobante de Pago</button>
+<div class="respuesta-box" id="respuestaMsg">Tocá un botón para generar la respuesta</div>
+<input id="numeroCliente" placeholder="Número del cliente ej: 595991234567">
+<button class="pedir" style="background:#1976D2" onclick="enviarRespuesta()">📩 Enviar Respuesta al Cliente</button>
 </div>
 
 <script>
 let m = new URLSearchParams(location.search).get('mesa') || '1';
 document.getElementById('mesa').textContent = m;
+let formaPago = 'Efectivo';
 
 let productos = [
   {nombre:"🍔 Hamburguesa", precio:15000},
@@ -59,6 +102,19 @@ let productos = [
 
 let cantidades = {};
 productos.forEach((p,i)=> cantidades[i]=0);
+let textoRespuesta = "";
+
+function elegirPago(tipo){
+  formaPago = tipo;
+  document.getElementById('optEfectivo').classList.toggle('activo', tipo=='Efectivo');
+  document.getElementById('optTransfer').classList.toggle('activo', tipo=='Transferencia');
+  document.getElementById('bancoBox').style.display = tipo=='Transferencia' ? 'block' : 'none';
+}
+
+function copiarAlias(){
+  let alias = document.getElementById('aliasTexto').textContent;
+  navigator.clipboard.writeText(alias).then(()=>{ alert("¡Alias copiado! 0991247112"); });
+}
 
 function dibujar(){
   let html = "";
@@ -98,9 +154,45 @@ function pedir(){
   });
   if(lineas.length==0){ alert("Elegí algo primero! Tocá el +"); return; }
   let nombre = document.getElementById('nombre').value || "Cliente";
-  let mensaje = "Hola EL SABOR! Soy " + nombre + ", de la Mesa " + m + ".\n\nQuiero pedir:\n" + lineas.join("\n") + "\n\nTotal: " + total.toLocaleString('es-PY') + " Gs";
-  let numero = "595991247112";
-  window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(mensaje));
+  let mensaje = "Hola EL SABOR! Soy " + nombre + ", de la Mesa " + m + ".\n\nQuiero pedir:\n" + lineas.join("\n") + "\n\nTotal: " + total.toLocaleString('es-PY') + " Gs" + "\nForma de pago: " + formaPago;
+  if(formaPago=='Transferencia'){ mensaje += "\n\nBanco: Continental\nAlias: 0991247112\nTitular: Reinerio Ayala\nYa te mando el comprobante."; }
+  window.open('https://wa.me/595991247112?text=' + encodeURIComponent(mensaje));
+}
+
+function enviarComprobante(){
+  let nombre = document.getElementById('nombre').value || "Cliente";
+  let mensaje = "Hola EL SABOR! Soy " + nombre + ", Mesa " + m + ". Te mando mi comprobante de pago por transferencia. (Adjuntá la foto acá)";
+  window.open('https://wa.me/595991247112?text=' + encodeURIComponent(mensaje));
+}
+
+function llamarMozo(){
+  let nombre = document.getElementById('nombre').value || "Cliente";
+  let mensaje = "🛎️ Hola EL SABOR! Soy " + nombre + ", de la Mesa " + m + ". ¿Puede venir el mozo por favor?";
+  window.open('https://wa.me/595991247112?text=' + encodeURIComponent(mensaje));
+}
+
+function pedirCuenta(){
+  let nombre = document.getElementById('nombre').value || "Cliente";
+  let mensaje = "🧾 Hola EL SABOR! Soy " + nombre + ", de la Mesa " + m + ". Quiero pedir mi cuenta, por favor. Pago con: " + formaPago;
+  window.open('https://wa.me/595991247112?text=' + encodeURIComponent(mensaje));
+}
+
+function responder(tipo){
+  if(tipo=='confirmado'){
+    textoRespuesta = "Hola! Gracias por tu pedido en EL SABOR 🍔 Mesa " + m + ". ¡Recibido! Ya estamos preparando tu pedido. En unos minutos te llevamos. ¡Gracias!";
+  } else if(tipo=='listo'){
+    textoRespuesta = "Hola! EL SABOR 🍔 Mesa " + m + ". ¡Tu pedido ya está listo! Ya te estamos llevando. ¡Buen provecho!";
+  } else if(tipo=='comprobante'){
+    textoRespuesta = "Hola! EL SABOR 🍔 Mesa " + m + ". ¿Me podés mandar tu comprobante de pago por favor? Banco Continental - Alias 0991247112 - Reinerio Ayala. ¡Gracias!";
+  }
+  document.getElementById('respuestaMsg').textContent = textoRespuesta;
+}
+
+function enviarRespuesta(){
+  let num = document.getElementById('numeroCliente').value;
+  if(!textoRespuesta){ alert("Primero tocá un botón de respuesta"); return; }
+  if(!num){ alert("Escribí el número del cliente"); return; }
+  window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(textoRespuesta));
 }
 
 dibujar();
